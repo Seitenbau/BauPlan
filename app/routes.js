@@ -18,30 +18,30 @@ export default function createRoutes(store) {
 
   return [
     {
-      path: '/',
+      path: '/*',
       name: 'home',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          import('containers/HomePage'),
-          import('containers/HomePage/reducer'),
+          import('containers/View'),
+          import('containers/View/reducer'),
           import('containers/Plans/reducer'),
-          import('containers/UiEventProvider/reducer'),
           import('containers/Plans/sagas'),
           import('containers/Table/reducer'),
-          import('containers/Img/reducer'),
           import('containers/JumpView/reducer'),
+          import('containers/SearchField/reducer'),
+          import('containers/SearchField/sagas'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([component, HomePageReducer, PlansReducer, UiEventProviderReducer, PlansSaga, TableReducer, ImgReducer, JumpViewReducer]) => {
-          injectReducer('home', HomePageReducer.default);
+        importModules.then(([component, ViewReducer, PlansReducer, PlansSaga, TableReducer, JumpViewReducer, SearchFieldReducer, SearchFieldSagas]) => {
+          injectReducer('view', ViewReducer.default);
           injectReducer('plans', PlansReducer.default);
-          injectReducer('uiEvents', UiEventProviderReducer.default);
           injectReducer('table', TableReducer.default);
-          injectReducer('img', ImgReducer.default);
           injectReducer('jumpView', JumpViewReducer.default);
+          injectReducer('searchField', SearchFieldReducer.default);
           injectSagas(PlansSaga.default);
+          injectSagas(SearchFieldSagas.default);
           renderRoute(component);
         });
 

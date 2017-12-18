@@ -7,8 +7,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import Floor from 'containers/Floor';
-
+import Floor from 'components/Floor';
 
 import {
   makeSelectPlansData,
@@ -33,8 +32,6 @@ export class Plans extends React.PureComponent { // eslint-disable-line react/pr
             labels={plan.labels}
             tables={tables.filter((table) => table.planId === plan.id)}
             projects={this.props.projects}
-            mapScaleFactor={plan.mapScaleFactor}
-            scale={plan.scale}
           />) : ''}
 
       </Wrapper>
@@ -44,7 +41,7 @@ export class Plans extends React.PureComponent { // eslint-disable-line react/pr
 
 Plans.propTypes = {
   tables: PropTypes.array.isRequired,
-  projects: PropTypes.array.isRequired,
+  projects: PropTypes.array,
   floors: PropTypes.array,
 };
 
